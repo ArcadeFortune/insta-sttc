@@ -3,14 +3,13 @@
   "configurePresets": [
     {
       "name": "main",
-      "displayName": "GCC 15.2.0 x86_64-w64-mingw32",
-      "description": "Using compilers: C = C:\\Program Files (x86)\\gcc\\bin\\gcc.exe, CXX = C:\\Program Files (x86)\\gcc\\bin\\g++.exe",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "displayName": "MSVC x64",
+      "description": "Using Visual Studio 17 2022 generator for MSVC x64",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-        "CMAKE_C_COMPILER": "C:/Program Files (x86)/gcc/bin/gcc.exe",
-        "CMAKE_CXX_COMPILER": "C:/Program Files (x86)/gcc/bin/g++.exe",
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install",
+        "CMAKE_GENERATOR_PLATFORM": "x64"
       }
     }
   ]

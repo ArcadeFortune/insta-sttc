@@ -1,0 +1,3 @@
+// struct mic {
+//   inputBuffer
+// }

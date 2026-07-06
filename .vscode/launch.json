@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug insta-sttc",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/Debug/insta-sttc.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/build/Debug",
+      "environment": [
+        {
+          "name": "PATH",
+          "value": "${env:PATH};${workspaceFolder}\\build\\external\\portaudio\\Debug"
+        }
+      ],
+      "preLaunchTask": "CMake: build"
+    }
+  ]
+}
