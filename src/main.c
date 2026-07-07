@@ -2,16 +2,19 @@
 
 int main()
 {
-  MicData data = {
+  float *buf = malloc(MIC_DATA_BUFFER_SIZE * sizeof(float));
+
+  MicData micData = {
+      .buf = buf,
       .writeIndex = 0,
       .readIndex = 0,
       .unreadAmount = 0,
   };
-
   PaStream *stream = NULL;
-  startListen(&data, &stream);
 
-  Pa_Sleep(2000);
+  startListen(&micData, &stream);
+
+  Pa_Sleep(20000);
 
   stopListen(stream);
   printf("bye.\n");

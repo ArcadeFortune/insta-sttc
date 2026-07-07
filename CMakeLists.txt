@@ -8,9 +8,9 @@ add_compile_options(/experimental:c11atomics)
 
 add_subdirectory(external/portaudio external/libwebsockets)
 add_executable(insta-sttc src/main.c
-  src/queue.c
-  src/mic.c
-  src/main.h)
+  src/audio.c
+  src/main.h
+  src/micDataManager.c)
 
 target_link_libraries(insta-sttc PRIVATE portaudio)
 

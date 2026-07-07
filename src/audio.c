@@ -9,26 +9,51 @@ audioCallback(const void *input,
 {
   const float *samples = (const float *)input;
   MicData *data = (MicData *)userData;
-  if (data->unreadAmount < BUFFER_SIZE)
-    return paContinue;
 
   if (samples)
   {
-    for (unsigned int i = 0; i < frameCount; i++)
-    {
-      int16_t sample;
-      if (samples[i] >= 1.0f)
-        sample = 32767;
-      else if (samples[i] <= -1.0f)
-        sample = -32768;
-      else
-        sample = (int16_t)(samples[i] * 32767.0f);
-      data->inputBuf[data->writeIndex] = sample;
-      data->writeIndex = (data->writeIndex + 1) % BUFFER_SIZE;
+    storeSamples(data, samples, frameCount);
+    
 
-      // todo: if data->cancel then return paAbort
-    }
-    data->unreadAmount += frameCount;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // for (unsigned int i = 0; i < frameCount; i++)
+    // {
+    //   int16_t sample;
+    //   if (samples[i] >= 1.0f)
+    //     sample = 32767;
+    //   else if (samples[i] <= -1.0f)
+    //     sample = -32768;
+    //   else
+    //     sample = (int16_t)(samples[i] * 32767.0f);
+    //   // data->inputBuf[data->writeIndex] = sample;
+    //   // if have to wrap, wrap
+
+    //   data->writeIndex = (data->writeIndex + 1) % MIC_DATA_BUFFER_SIZE;
+
+    //   // todo: if data->cancel then return paAbort
+    // }
+    // data->unreadAmount += frameCount;
   }
   return paContinue;
 };
