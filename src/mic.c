@@ -9,12 +9,12 @@ audioCallback(const void *input,
 {
   const float *samples = (const float *)input;
   MicData *data = (MicData *)userData;
-  if (atomic_load(&data->unreadAmount) < BUFFER_SIZE)
+  if (data->unreadAmount < BUFFER_SIZE)
     return paContinue;
 
   if (samples)
   {
-    for (int i = 0; i < frameCount; i++)
+    for (unsigned int i = 0; i < frameCount; i++)
     {
       int16_t sample;
       if (samples[i] >= 1.0f)
@@ -28,16 +28,15 @@ audioCallback(const void *input,
 
       // todo: if data->cancel then return paAbort
     }
-    atomic_fetch_add(&data->unreadAmount, frameCount);
+    data->unreadAmount += frameCount;
   }
   return paContinue;
 };
 
-PaStream *startListen(MicData *micData)
+startListen(MicData *micData, PaStream *stream)
 {
   printf("Listening for microphone\n\n");
   PaError err;
-  PaStream *stream;
   err = Pa_Initialize();
   if (err)
     return printf("Error with the audio device: %s\n", Pa_GetErrorText(err));
@@ -58,11 +57,10 @@ PaStream *startListen(MicData *micData)
   if (err)
     return printf("Unable to start audio stream: %s\n", Pa_GetErrorText(err));
 
-  printf("Recording..\n");
-  return stream;
+  return printf("Recording..\n");
 }
 
-void stopListen(PaStream *stream)
+stopListen(PaStream *stream)
 {
   PaError err;
   err = Pa_StopStream(stream);
@@ -73,4 +71,6 @@ void stopListen(PaStream *stream)
   err = Pa_Terminate();
   if (err)
     return printf("Error with terminating audio stream: %s\n", Pa_GetErrorText(err));
+
+  return printf("Stream closed.\n");
 }

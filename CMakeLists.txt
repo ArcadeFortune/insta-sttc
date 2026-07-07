@@ -4,7 +4,6 @@ project(insta-sttc VERSION 0.1.0 LANGUAGES C)
 # Enforce C11 for the project
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_EXTENSIONS OFF)
 add_compile_options(/experimental:c11atomics)
 
 add_subdirectory(external/portaudio)

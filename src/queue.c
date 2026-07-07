@@ -2,35 +2,35 @@
 #include <stdint.h>
 #define ALIGNMENT (64)
 
-typedef struct Array
-{
-  void *items;
-  int head;
-  int tail;
-  size_t itemCount;
-  size_t itemsSize;
-  size_t arraySize;
-} Array;
+// typedef struct Array
+// {
+//   void *items;
+//   int head;
+//   int tail;
+//   size_t itemCount;
+//   size_t itemsSize;
+//   size_t arraySize;
+// } Array;
 
-Array newArray(size_t size)
-{
-  size_t realSize = (size + ALIGNMENT - 1) & ~(ALIGNMENT - 1);
-  void *items = malloc(realSize);
-  Array array = {
-      .items = items,
-      .itemCount = 0,
-      .itemsSize = 0,
-      .arraySize = realSize,
-      .head = 0,
-      .tail = 0,
-  };
-  return array;
-}
+// Array newArray(size_t size)
+// {
+//   size_t realSize = (size + ALIGNMENT - 1) & ~(ALIGNMENT - 1);
+//   void *items = malloc(realSize);
+//   Array array = {
+//       .items = items,
+//       .itemCount = 0,
+//       .itemsSize = 0,
+//       .arraySize = realSize,
+//       .head = 0,
+//       .tail = 0,
+//   };
+//   return array;
+// }
 
-void deleteArray(Array *arr)
-{
-  free(arr->items);
-}
+// void deleteArray(Array *arr)
+// {
+//   free(arr->items);
+// }
 
 // void append(Array *arr, int16_t buf)
 // {
@@ -53,7 +53,7 @@ void deleteArray(Array *arr)
 //   memcopy
 // }
 
-void *popQueue()
-{
-  // int nextTmp = q.next->
-}
+// void *popQueue()
+// {
+//   // int nextTmp = q.next->
+// }
