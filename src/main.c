@@ -7,10 +7,11 @@ int main()
       .readIndex = 0,
       .unreadAmount = 0,
   };
-  PaStream *stream;
-  startListen(&data);
 
-  Pa_Sleep(10000);
+  PaStream *stream = NULL;
+  startListen(&data, &stream);
+
+  Pa_Sleep(2000);
 
   stopListen(stream);
   printf("bye.\n");

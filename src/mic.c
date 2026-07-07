@@ -33,7 +33,7 @@ audioCallback(const void *input,
   return paContinue;
 };
 
-startListen(MicData *micData, PaStream *stream)
+startListen(MicData *micData, PaStream **stream)
 {
   printf("Listening for microphone\n\n");
   PaError err;
@@ -42,18 +42,18 @@ startListen(MicData *micData, PaStream *stream)
     return printf("Error with the audio device: %s\n", Pa_GetErrorText(err));
 
   err = Pa_OpenDefaultStream(
-      &stream,
+      stream,
       1, // input channels
       0, // output channels
       paFloat32,
       SAMPLE_RATE,
       FRAMES_PER_BUFFER,
       audioCallback,
-      &micData);
+      micData);
   if (err)
     return printf("Unable to open audio stream: %s\n", Pa_GetErrorText(err));
 
-  err = Pa_StartStream(stream);
+  err = Pa_StartStream(*stream);
   if (err)
     return printf("Unable to start audio stream: %s\n", Pa_GetErrorText(err));
 

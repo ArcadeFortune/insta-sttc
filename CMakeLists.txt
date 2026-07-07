@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 add_compile_options(/experimental:c11atomics)
 
-add_subdirectory(external/portaudio)
+add_subdirectory(external/portaudio external/libwebsockets)
 add_executable(insta-sttc src/main.c
   src/queue.c
   src/mic.c
