@@ -2,21 +2,43 @@
 
 int main()
 {
-  float *buf = malloc(MIC_DATA_BUFFER_SIZE * sizeof(float));
+  // float *buf = malloc(MIC_DATA_BUFFER_SIZE * sizeof(float));
+  // int16_t *pcmBuf = malloc(MIC_DATA_BUFFER_SIZE * sizeof(int16_t) * 10);
+  // char *base64Buf = malloc(MIC_DATA_BUFFER_SIZE * sizeof(char) * 10);
+  float *buf = malloc(6);
+  int16_t *pcmBuf = malloc(6);
+  char *base64Buf = malloc(6 * 4 / 3);
+
+  buf[0] = 1.0f;
+  buf[1] = -1.0f;
+  buf[2] = .5f;
+  buf[3] = .15f;
+  buf[4] = 0;
+  buf[5] = 1.5f;
 
   MicData micData = {
       .buf = buf,
-      .writeIndex = 0,
+      .pcmBuf = pcmBuf,
+      .base64Buf = base64Buf,
+      .writeIndex = 6,
       .readIndex = 0,
-      .unreadAmount = 0,
   };
-  PaStream *stream = NULL;
+  processSample(&micData);
+  return 0;
+  // PaStream *stream = NULL;
 
-  startListen(&micData, &stream);
+  // startListen(&micData, &stream);
 
-  Pa_Sleep(20000);
+  // for (int i = 0; i < 100; i++)
+  // {
+  //   processSample(&micData);
+  //   Pa_Sleep(10);
+  // }
+  // Pa_Sleep(20000);
 
-  stopListen(stream);
-  printf("bye.\n");
+  // free(buf);
+  // free(base64Buf);
+  // stopListen(stream);
+  // printf("bye.\n");
   return 0;
 }

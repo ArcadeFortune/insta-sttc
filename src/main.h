@@ -1,8 +1,11 @@
+#ifndef MAIN_H
+#define MAIN_H
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-// #include <stdatomic.h>
+#include <math.h>
 #include "portaudio.h"
 
 #define SAMPLE_RATE (24000)
@@ -12,7 +15,20 @@
 typedef struct
 {
   float *buf;
+  int16_t *pcmBuf;
+  char *base64Buf;
   size_t writeIndex;
   size_t readIndex;
-  size_t unreadAmount;
 } MicData;
+
+int startListen(MicData *micData, PaStream **stream);
+int stopListen(PaStream *stream);
+
+void storeSamples(MicData *micData, const float *samples, size_t amount);
+size_t readSamples(MicData *micData);
+
+void processSample(MicData *micData);
+void floatsToPcm(float *in, int16_t *out, size_t amount);
+void bytesToBase64(int8_t *in, char *out, size_t amount);
+void pcmToBase64(int16_t *in, char *out, size_t amount);
+#endif

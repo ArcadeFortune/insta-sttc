@@ -13,29 +13,6 @@ audioCallback(const void *input,
   if (samples)
   {
     storeSamples(data, samples, frameCount);
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // for (unsigned int i = 0; i < frameCount; i++)
     // {
@@ -53,12 +30,11 @@ audioCallback(const void *input,
 
     //   // todo: if data->cancel then return paAbort
     // }
-    // data->unreadAmount += frameCount;
   }
   return paContinue;
 };
 
-startListen(MicData *micData, PaStream **stream)
+int startListen(MicData *micData, PaStream **stream)
 {
   printf("Listening for microphone\n\n");
   PaError err;
@@ -85,7 +61,7 @@ startListen(MicData *micData, PaStream **stream)
   return printf("Recording..\n");
 }
 
-stopListen(PaStream *stream)
+int stopListen(PaStream *stream)
 {
   PaError err;
   err = Pa_StopStream(stream);

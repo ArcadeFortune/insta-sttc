@@ -10,7 +10,8 @@ add_subdirectory(external/portaudio external/libwebsockets)
 add_executable(insta-sttc src/main.c
   src/audio.c
   src/main.h
-  src/micDataManager.c)
+  src/micDataManager.c
+  src/micDataProcessor.c)
 
 target_link_libraries(insta-sttc PRIVATE portaudio)
 
