@@ -16,10 +16,13 @@ int main()
   };
 
   startListen(&micData, &stream);
+  struct lws_context *context = startWebsocketClient();
+  establishWebsocketClient(context);
 
   while (1)
   {
-    processSample(&micData);
+    // processSample(&micData);
+    lws_service(context, 10);
     Pa_Sleep(20);
   }
 
@@ -27,6 +30,7 @@ int main()
   free(pcmBuf);
   free(base64Buf);
   stopListen(stream);
+  stopWebsocketClient(context);
   printf("bye.\n");
   return 0;
 }

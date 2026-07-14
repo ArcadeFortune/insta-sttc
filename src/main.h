@@ -23,7 +23,10 @@ typedef struct
 } MicData;
 
 int startListen(MicData *micData, PaStream **stream);
+struct lws_context *startWebsocketClient();
+int establishWebsocketClient(struct lws_context *context);
 int stopListen(PaStream *stream);
+int stopWebsocketClient(struct lws_context *context);
 
 void storeSamples(MicData *micData, const float *samples, size_t amount);
 size_t readSamples(MicData *micData);
