@@ -6,7 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "portaudio.h"
+#include <portaudio.h>
+#include <libwebsockets.h>
 
 #define SAMPLE_RATE (24000)
 #define FRAMES_PER_BUFFER (2400)

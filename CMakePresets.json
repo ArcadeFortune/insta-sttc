@@ -6,7 +6,8 @@
       "displayName": "MSVC x64",
       "description": "Using Visual Studio 17 2022 generator for MSVC x64",
       "generator": "Visual Studio 17 2022",
-      "binaryDir": "${sourceDir}/build",
+      "binaryDir": "${sourceDir}\\build",
+      "toolchainFile": "C:\\Program Files\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
       "cacheVariables": {
         "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install",
         "CMAKE_GENERATOR_PLATFORM": "x64"

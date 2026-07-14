@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**"
             ],
+            "configurationProvider": "ms-vscode.cmake-tools",
             "defines": [
                 "_DEBUG",
                 "UNICODE",

@@ -1,18 +1,15 @@
 cmake_minimum_required(VERSION 3.10.0)
 project(insta-sttc VERSION 0.1.0 LANGUAGES C)
 
-# Enforce C11 for the project
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_STANDARD_REQUIRED ON)
-add_compile_options(/experimental:c11atomics)
-
-add_subdirectory(external/portaudio external/libwebsockets)
 add_executable(insta-sttc src/main.c
   src/audio.c
   src/main.h
   src/micDataManager.c
   src/micDataProcessor.c)
-
+  
+find_package(libwebsockets CONFIG REQUIRED)
+find_package(portaudio CONFIG REQUIRED)
+target_link_libraries(insta-sttc PRIVATE websockets_shared)
 target_link_libraries(insta-sttc PRIVATE portaudio)
 
 if(WIN32 AND TARGET portaudio)

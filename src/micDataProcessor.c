@@ -8,6 +8,7 @@ void processSample(MicData *micData)
 
   floatsToPcm(micData->buf, micData->pcmBuf, allowedToRead);
   bytesToBase64((int8_t *)micData->pcmBuf, micData->base64Buf, allowedToRead * sizeof(int16_t));
+  printf("sending string: %s\n", micData->base64Buf);
 }
 
 void floatsToPcm(float *in, int16_t *out, size_t amount)
@@ -72,7 +73,6 @@ void bytesToBase64(int8_t *in, char *out, size_t bytesToProcess)
     out[charsProcessed++] = '=';
   }
   out[charsProcessed++] = '\0';
-  printf("\ncomputed base64: %s\n", out);
 }
 
 // // buffer
