@@ -23,8 +23,8 @@ static int callback(
     lws_add_http_header_by_name(
         wsi,
         (unsigned char *)"authorization:",
-        (unsigned char *)"Bearer YOUR_API_KEY",
-        (int)strlen("Bearer YOUR_API_KEY"),
+        (unsigned char *)OPENAI_API_KEY,
+        (int)strlen(OPENAI_API_KEY),
         p,
         end);
     break;
@@ -66,8 +66,8 @@ struct lws_context *startWebsocketClient()
            0,
            0}};
 
-  info.port = 9000;
   info.protocols = protocols;
+  info.options = LWS_SERVER_OPTION_DO_SSL_GLOBAL_INIT;
 
   return lws_create_context(&info);
 }

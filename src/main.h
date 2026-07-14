@@ -1,6 +1,10 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#if __has_include("env.h")
+#include "env.h"
+#endif
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>

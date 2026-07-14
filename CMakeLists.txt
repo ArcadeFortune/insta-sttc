@@ -6,7 +6,8 @@ add_executable(insta-sttc src/main.c
   src/main.h
   src/micDataManager.c
   src/micDataProcessor.c
-  src/client.c)
+  src/client.c
+  src/env.h)
   
 find_package(libwebsockets CONFIG REQUIRED)
 find_package(portaudio CONFIG REQUIRED)
