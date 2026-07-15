@@ -1,17 +1,14 @@
 #include "main.h"
 
-audioCallback(const void *input,
-              void *output,
-              unsigned long frameCount,
-              const PaStreamCallbackTimeInfo *timeInfo,
-              PaStreamCallbackFlags statusFlags,
-              void *userData)
-{
+PaStreamCallbackResult audioCallback(const void *input, void *output,
+                                     unsigned long frameCount,
+                                     const PaStreamCallbackTimeInfo *timeInfo,
+                                     PaStreamCallbackFlags statusFlags,
+                                     void *userData) {
   const float *samples = (const float *)input;
   MicData *data = (MicData *)userData;
 
-  if (samples)
-  {
+  if (samples) {
     storeSamples(data, samples, frameCount);
 
     // for (unsigned int i = 0; i < frameCount; i++)
@@ -34,23 +31,18 @@ audioCallback(const void *input,
   return paContinue;
 };
 
-int startListen(MicData *micData, PaStream **stream)
-{
+int startListen(MicData *micData, PaStream **stream) {
   printf("Listening for microphone\n\n");
   PaError err;
   err = Pa_Initialize();
   if (err)
     return printf("Error with the audio device: %s\n", Pa_GetErrorText(err));
 
-  err = Pa_OpenDefaultStream(
-      stream,
-      1, // input channels
-      0, // output channels
-      paFloat32,
-      SAMPLE_RATE,
-      FRAMES_PER_BUFFER,
-      audioCallback,
-      micData);
+  err = Pa_OpenDefaultStream(stream,
+                             1, // input channels
+                             0, // output channels
+                             paFloat32, SAMPLE_RATE, FRAMES_PER_BUFFER,
+                             audioCallback, micData);
   if (err)
     return printf("Unable to open audio stream: %s\n", Pa_GetErrorText(err));
 
@@ -61,8 +53,7 @@ int startListen(MicData *micData, PaStream **stream)
   return printf("Recording..\n");
 }
 
-int stopListen(PaStream *stream)
-{
+int stopListen(PaStream *stream) {
   PaError err;
   err = Pa_StopStream(stream);
   if (err)
@@ -71,7 +62,8 @@ int stopListen(PaStream *stream)
 
   err = Pa_Terminate();
   if (err)
-    return printf("Error with terminating audio stream: %s\n", Pa_GetErrorText(err));
+    return printf("Error with terminating audio stream: %s\n",
+                  Pa_GetErrorText(err));
 
   return printf("Stream closed.\n");
 }

@@ -69,13 +69,9 @@ struct lws_context *startWebsocketClient()
   info.protocols = protocols;
   info.options = LWS_SERVER_OPTION_DO_SSL_GLOBAL_INIT;
 
-  return lws_create_context(&info);
-}
-
-int establishWebsocketClient(struct lws_context *context)
-{
   struct lws_client_connect_info ccinfo = {0};
 
+  struct lws_context * context = lws_create_context(&info);
   ccinfo.context = context;
   ccinfo.address = "api.openai.com";
   ccinfo.port = 443;
@@ -84,9 +80,8 @@ int establishWebsocketClient(struct lws_context *context)
   ccinfo.host = "api.openai.com";
   ccinfo.origin = "api.openai.com";
   ccinfo.protocol = "realtime";
-
   struct lws *wsi = lws_client_connect_via_info(&ccinfo);
-  return 0;
+  return context;
 }
 
 int stopWebsocketClient(struct lws_context *context)
