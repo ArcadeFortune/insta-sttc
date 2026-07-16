@@ -8,8 +8,7 @@ LRESULT CALLBACK keyboardHook(int nCode, WPARAM wParam, LPARAM lParam) {
   if (nCode == HC_ACTION) {
     KBDLLHOOKSTRUCT *kbd = (KBDLLHOOKSTRUCT *)lParam;
 
-    // Example keybind: F1
-    if (kbd->vkCode == VK_F1) {
+    if (kbd->vkCode == VK_F10) {
       switch (wParam) {
       case WM_KEYDOWN:
         on_key_down();

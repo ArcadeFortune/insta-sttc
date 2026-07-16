@@ -1,9 +1,14 @@
 #include "main.h"
 
 atomic_bool isRecording = false;
+atomic_int websocketState = NOT_CONNECTED;
 
 int main() {
+  bool previousIsRecording = isRecording;
   PaStream *stream = NULL;
+  struct lws_context *context = startWebsocketClient();
+  printf("connecting to openai\n");
+  connectWebsocketClient(context);
 
   float *buf = malloc(MIC_DATA_BUFFER_SIZE * sizeof(float));
   int16_t *pcmBuf = malloc(MIC_DATA_BUFFER_SIZE * sizeof(int16_t));
@@ -18,21 +23,38 @@ int main() {
 
   CreateThread(NULL, 0, keyboardThread, NULL, 0, NULL);
 
-  // startListen(&micData, &stream);
-  // struct lws_context *context = startWebsocketClient();
-
-  while (1) {
-    // processSample(&micData);
+  while (true) {
+    // if (websocketState == UNUSABLE) {
+    //   printf("Websocket connection is unusable.\n");
+    //   break;
+    // }
     // lws_service(context, 0);
-    printf("isRecording: %d\n", atomic_load(&isRecording));
+    if (isRecording && !previousIsRecording) {
+      printf("starting to listen the mic\n");
+      startListen(&micData, &stream);
+      previousIsRecording = true;
+    }
+    if (!isRecording && previousIsRecording) {
+      previousIsRecording = false;
+      printf("stopping the microphone\n");
+      stopListen(stream);
+    }
+    if (isRecording) {
+      processSample(&micData);
+      //todo: second thread to continusely read buffer and send it to websocket.
+      if (websocketState == CONNECTED) {
+        sendToWebsocket(micData.base64Buf);
+      }
+    }
+
     Pa_Sleep(20 * 10);
   }
 
+  printf("stopping the websocket client\n");
+  // stopWebsocketClient(context);
   free(buf);
   free(pcmBuf);
   free(base64Buf);
-  // stopListen(stream);
-  // stopWebsocketClient(context);
   printf("bye.\n");
   return 0;
 }

@@ -1,6 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stddef.h>
 #if __has_include("env.h")
 #include "env.h" //contains #define OPENAI_API_KEY "Bearer sk-proj-xxx"
 #endif
@@ -34,19 +35,29 @@ typedef struct
   float *buf;
   int16_t *pcmBuf;
   char *base64Buf;
-  size_t writeIndex;
-  size_t readIndex;
+  atomic_size_t writeIndex;
+  atomic_size_t readIndex;
 } MicData;
 
+enum WebsocketState {
+  NOT_CONNECTED,
+  CONNECTED,
+  UNUSABLE = -1,
+};
+
 extern atomic_bool isRecording;
+extern atomic_int websocketState;
 
 int startListen(MicData *micData, PaStream **stream);
 struct lws_context *startWebsocketClient();
+void connectWebsocketClient(struct lws_context *context);
+void sendToWebsocket(char *buf);
 int stopListen(PaStream *stream);
 int stopWebsocketClient(struct lws_context *context);
 
 DWORD WINAPI keyboardThread(void *arg);
-void storeSamples(MicData *micData, const float *samples, size_t amount);
+DWORD WINAPI processSampleThread(void *arg);
+void storeSamples(MicData *micData, const int16_t *samples, size_t amount);
 size_t readSamples(MicData *micData);
 
 void processSample(MicData *micData);
